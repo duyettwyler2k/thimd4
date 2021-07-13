@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>List City</title>
+</head>
+<body>
+<div class="modal fade" id="createCity_Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>Name City</td>
+                        <td> <input type="text" id="namecity_create"> </td>
+                    </tr>
+                    <tr>
+                        <td>Acreage</td>
+                        <td><input type="text" id="acreage_create"></td>
+                    </tr>
+                    <tr>
+                        <td>Population</td>
+                        <td><input type="text" id="population_create"></td>
+                    </tr>
+                    <tr>
+                       <td>GDP</td>
+                       <td><input type="text" id="gdp_create"></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" id="description_create"></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            <select id="country_create">
+                            <option th:each="c:${country}" th:value="${c.id}" th:text="${c.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="create_Customer" onclick="createCity()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Update-->
+<div class="modal fade" id="updateCity_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateCity">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="${data.id}" id="id_update">
+                <table>
+                    <tr>
+                        <td>Name City</td>
+                        <td> <input type="text" id="namecity_update"> </td>
+                    </tr>
+                    <tr>
+                        <td>Acreage</td>
+                        <td><input type="text" id="acreage_update"></td>
+                    </tr>
+                    <tr>
+                        <td>Population</td>
+                        <td><input type="text" id="population_update"></td>
+                    </tr>
+                    <tr>
+                        <td>GDP</td>
+                        <td><input type="text" id="gdp_update"></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" id="description_update"></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            <select id="country_update">
+                                <option th:each="c:${country}" th:value="${c.id}" th:text="${c.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="updateCity_button">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal View-->
+<div class="modal fade" id="viewCity_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewCity">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" value="${data.id}" id="id_view">
+                <table>
+                    <tr>
+                        <td>Name City</td>
+                        <td> <input type="text" id="namecity_view"> </td>
+                    </tr>
+                    <tr>
+                        <td>Acreage</td>
+                        <td><input type="text" id="acreage_view"></td>
+                    </tr>
+                    <tr>
+                        <td>Population</td>
+                        <td><input type="text" id="population_view"></td>
+                    </tr>
+                    <tr>
+                        <td>GDP</td>
+                        <td><input type="text" id="gdp_view"></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" id="description_view"></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>
+                            <select id="country_view">
+                                <option th:each="c:${country}" th:value="${c.id}" th:text="${c.name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal deleteCity-->
+<div class="modal fade" id="deleteCity_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eModalLabelCity">DELETE</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <td>Do you want delete</td>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="deleteCity_button">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<h3>List City</h3>
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createCity_Modal" style="width: 150px">
+    Create
+</button>
+<div id="listCity"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    window.onload = showCity;
+
+    function showCity() {
+        $('#createCity_Modal').modal('hide');
+        $('#updateCity_modal').modal('hide');
+        $('#deleteCity_modal').modal('hide');
+        $('#viewCity_modal').modal('hide');
+        $.ajax({
+            type: "GET",
+            url: "/city",
+            success: function (data) {
+                let content = '<table class="table table-bordered"><tr>\n' +
+                    '<td>NameCity</td>' +
+                    '<td>Acreage</td>' +
+                    '<td>Population</td>' +
+                    '<td>GDP</td>' +
+                    '<td>Describe</td>' +
+                    '<td>Country</td>' +
+                    '<td>Edit</td>' +
+                    '<td>Delete</td>' +
+                    '<td>View</td>' +
+                    '</tr>'
+                for (let i = 0; i < data.length; i++) {
+                    content += getCity(data[i])
+                }
+                document.getElementById('listCity').innerHTML = content;
+            }
+        })
+    }
+    function getCity(city){
+        return `<tr>
+<td>${city.nameCity}</td>
+<td>${city.acreage}</td>
+<td>${city.population}</td>
+<td>${city.gdp}</td>
+<td>${city.describe1}</td>
+<td>${city.country.name}</td>
+<td>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateCity_modal"
+   onclick="updateCity(${city.id})">Edit</button>
+  </td>
+<td>
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCity_modal"
+   onclick="deleteCity(${city.id})">Delete</button>
+  </td>
+
+ <td>
+  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#viewCity_modal"
+   onclick="viewCity(${city.id})">View</button>
+  </td>
+
+</tr>`
+    }
+    function createCity(){
+        let nameCity=$('#namecity_create').val()
+        let acreage=$('#acreage_create').val()
+        let population=$('#population_create').val()
+        let gdp=$('#gdp_create').val()
+        let describe1=$('#description_create').val()
+        let country=$('#country_create').val()
+        let newCity={
+            nameCity:nameCity,
+            acreage:acreage,
+            population:population,
+            gdp:gdp,
+            describe1:describe1,
+            country:{
+                id:country
+            },
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newCity),
+            url: "/city",
+            success: showCity
+        });
+        event.preventDefault();
+    }
+    function updateCity(id){
+        $.ajax({
+            type:"GET",
+            url:"/city/"+id,
+            success:function (data){
+                $('#id_update').val(data.id);
+                $('#namecity_update').val(data.nameCity);
+                $('#acreage_update').val(data.acreage);
+                $('#population_update').val(data.population);
+                $('#gdp_update').val(data.gdp);
+                $('#description_update').val(data.describe1);
+                $('#country_update').val(data.country.id);
+            }
+        })
+        $(document).ready(function (){
+            $('#updateCity_button').click(function (event){
+                let nameCity=$('#namecity_update').val()
+                let acreage=$('#acreage_update').val()
+                let population=$('#population_update').val()
+                let gdp=$('#gdp_update').val()
+                let describe1=$('#description_update').val()
+                let country=$('#country_update').val()
+                let newCity={
+                    nameCity:nameCity,
+                    acreage:acreage,
+                    population:population,
+                    gdp:gdp,
+                    describe1:describe1,
+                    country:{
+                        id:country
+                    },
+                };
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type:"PUT",
+                    url:"/city/"+id,
+                    data:JSON.stringify(newCity),
+                    success:showCity
+                })
+                event.preventDefault();
+            })
+        })
+    }
+    //delete
+    function deleteCity(id) {
+        $(document).ready(function () {
+            $('#deleteCity_button').click(function (event) {
+                $.ajax({
+                    type: "DELETE",
+                    url: `/city/` + id,
+                    success: showCity
+                })
+                event.preventDefault();
+            })
+        })
+    }
+    function viewCity(id){
+        $.ajax({
+            type:"GET",
+            url:"/city/"+id,
+            success:function (data){
+                $('#id_view').val(data.id);
+                $('#namecity_view').val(data.nameCity);
+                $('#acreage_view').val(data.acreage);
+                $('#population_view').val(data.population);
+                $('#gdp_view').val(data.gdp);
+                $('#description_view').val(data.describe1);
+                $('#country_view').val(data.country.id);
+            }
+        })
+    }
+
+</script>
+</body>
+</html>
